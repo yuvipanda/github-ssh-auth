@@ -42,3 +42,6 @@ This allows the user to authenticate with this ssh daemon by using their github 
 3. If GitHub is compromised, so is your server
 4. Requires people to have a github account to be able to ssh into your server
 5. GitHub can potentially figure out who the users of a particular IP address are
+6. Security is right now somewhat coarse - only min-uid based username validation.
+   While this disallows obviously terrible things like the github user 'root' being
+   able to ssh into any machine, it isn't good enough.
