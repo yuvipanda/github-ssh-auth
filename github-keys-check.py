@@ -2,6 +2,7 @@
 import urllib.request
 import argparse
 import pwd
+import grp
 import sys
 
 
@@ -11,15 +12,17 @@ def key_for_user(user):
         return f.read().decode('utf-8')
 
 
-def validate_user(username, min_uid):
+def validate_user(username, min_uid, in_group):
     """
     Validates that a given username is:
 
         1. A valid, existing user
-        2. Has uid > min_uid
+        2. Is a member of the group in_group
+        3. Has uid > min_uid
     """
     user = pwd.getpwnam(username)
-    return user.pw_uid > min_uid
+    if in_group is None or username in grp.getgrnam(in_group).gr_mem:
+        return user.pw_uid > min_uid
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -29,8 +32,12 @@ if __name__ == '__main__':
         help='uid must be > this to be allowed ssh access. \
               Helps keep system users non-sshable'
     )
+    parser.add_argument(
+        '--in-group', default=None,
+        help='Only users in this group can login via github keys'
+    )
     args = parser.parse_args()
-    if validate_user(args.username, args.min_uid):
+    if validate_user(args.username, args.min_uid, args.in_group):
         print(key_for_user(args.username))
     else:
         print("Not a valid user")
