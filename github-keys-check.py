@@ -23,6 +23,7 @@ def validate_user(username, min_uid, in_group):
     user = pwd.getpwnam(username)
     if in_group is None or username in grp.getgrnam(in_group).gr_mem:
         return user.pw_uid > min_uid
+    return False
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
