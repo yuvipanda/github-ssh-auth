@@ -1,6 +1,6 @@
 # github-ssh-auth #
 
-Allow `sshd` to use your github ssh keys for authentiacatin you.
+Allow `sshd` to use your github ssh keys for authenticating you.
 
 ## What? ##
 
