@@ -24,7 +24,7 @@ the shell username and the github account name match.
 ## How? ##
 
 1. Install `python3`
-2. Copy the `github-keys-check.py` file into `/usr/local/bin/`
+2. Copy the `github-keys-check.py` file into `/usr/local/sbin/`. The `sbin` is because sshd will refuse to execute scripts in `/usr/local/bin/` for security reasons.
 3. Add the following lines to your `sshd` config (usually at `/etc/ssh/sshd_config`):
     ```
     AuthorizedKeysCommand       /usr/local/bin/github-keys-check.py
